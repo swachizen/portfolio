@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-
 import { COUNTRIES } from "@/lib/country";
 import { SERVICE_TOPICS } from "@/lib/service";
 
@@ -256,262 +255,259 @@ export default function ContactForm() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit} noValidate className="space-y-8" aria-label="Contact form">
-        {/* Honeypot */}
-        <input
-          type="text"
-          name="website"
-          tabIndex={-1}
-          autoComplete="off"
-          value={form.website}
-          onChange={(event) => updateField("website", event.target.value)}
-          className="absolute -z-50 m-0 h-0 w-0 border-0 p-0 opacity-0 pointer-events-none"
-          aria-hidden="true"
-        />
+    <form onSubmit={handleSubmit} noValidate className="space-y-8" aria-label="Contact form">
+      {/* Honeypot */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        value={form.website}
+        onChange={(event) => updateField("website", event.target.value)}
+        className="absolute -z-50 m-0 h-0 w-0 border-0 p-0 opacity-0 pointer-events-none"
+        aria-hidden="true"
+      />
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {/* Email */}
-          <div className="space-y-2">
-            <label htmlFor="email" className="text-sm font-medium text-foreground ml-2">
-              Email Address
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={form.email}
-              onChange={(event) => updateField("email", event.target.value)}
-              placeholder="swaleh@example.com"
-              aria-invalid={!!errors.email}
-              aria-describedby={errors.email ? "email-error" : undefined}
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            />
-            {errors.email && (
-              <p id="email-error" className="text-sm text-red-500 ml-2">
-                {errors.email}
-              </p>
-            )}
-          </div>
-
-          {/* Full Names */}
-          <div className="space-y-2">
-            <label htmlFor="fullNames" className="text-sm font-medium text-foreground ml-2">
-              Full Names
-            </label>
-            <input
-              id="fullNames"
-              name="fullNames"
-              type="text"
-              autoComplete="name"
-              value={form.fullNames}
-              onChange={(event) => updateField("fullNames", event.target.value)}
-              placeholder="Swaleh Mohamad"
-              aria-invalid={!!errors.fullNames}
-              aria-describedby={errors.fullNames ? "fullname-error" : undefined}
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            />
-            {errors.fullNames && (
-              <p id="fullname-error" className="text-sm text-red-500 ml-2">
-                {errors.fullNames}
-              </p>
-            )}
-          </div>
-
-          {/* Company */}
-          <div className="space-y-4 md:col-span-2">
-            <div className="flex items-center gap-3 ml-2">
-              <input
-                id="self-employed"
-                type="checkbox"
-                checked={form.selfEmployed}
-                onChange={(event) => updateField("selfEmployed", event.target.checked)}
-                className="h-4 w-4 rounded-sm border-border text-primary focus:ring-primary"
-              />
-              <label htmlFor="self-employed" className="text-sm text-foreground">
-                Self Employed
-              </label>
-            </div>
-
-            {!form.selfEmployed && (
-              <div className="space-y-2">
-                <label htmlFor="company" className="text-sm font-medium text-foreground ml-2">
-                  Company Name
-                </label>
-                <input
-                  id="company"
-                  name="company"
-                  type="text"
-                  value={form.company}
-                  onChange={(event) => updateField("company", event.target.value)}
-                  placeholder="ABC Technologies Ltd."
-                  aria-invalid={!!errors.company}
-                  className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-                />
-                {errors.company && <p className="text-sm text-red-500 ml-2">{errors.company}</p>}
-              </div>
-            )}
-          </div>
-
-          {/* Country */}
-          <div className="space-y-2">
-            <label htmlFor="country" className="text-sm font-medium text-foreground ml-2">
-              Country
-            </label>
-            <select
-              id="country"
-              value={form.country}
-              onChange={(event) => updateField("country", event.target.value)}
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            >
-              <option value="">Select Country</option>
-              {COUNTRIES.map((country) => (
-                <option key={country.name} value={country.name}>
-                  {country.flag} {country.name}
-                </option>
-              ))}
-            </select>
-            {errors.country && <p className="text-sm text-red-500 ml-2">{errors.country}</p>}
-          </div>
-
-          {/* County */}
-          <div className="space-y-2">
-            <label htmlFor="county" className="text-sm font-medium text-foreground ml-2">
-              County / Town
-            </label>
-            <select
-              id="county"
-              value={form.county}
-              disabled={!form.country}
-              onChange={(event) => updateField("county", event.target.value)}
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground disabled:opacity-50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            >
-              <option value="">Select County / Town</option>
-              {availableCounties.map((county) => (
-                <option key={county} value={county}>
-                  {county}
-                </option>
-              ))}
-            </select>
-            {errors.county && <p className="text-sm text-red-500 ml-2">{errors.county}</p>}
-          </div>
-
-          {/* Country Code */}
-          <div className="space-y-2">
-            <label htmlFor="countryCode" className="text-sm font-medium text-foreground ml-2">
-              Country Code
-            </label>
-            <input
-              id="countryCode"
-              type="text"
-              value={selectedCountry ? `${selectedCountry.flag} ${selectedCountry.dialCode}` : ""}
-              readOnly
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground focus:outline-none disabled:opacity-50"
-            />
-          </div>
-
-          {/* Phone */}
-          <div className="space-y-2">
-            <label htmlFor="phone" className="text-sm font-medium text-foreground ml-2">
-              Phone Number
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              inputMode="numeric"
-              value={form.phone}
-              onChange={(event) => updateField("phone", event.target.value)}
-              placeholder="792948482"
-              aria-invalid={!!errors.phone}
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            />
-            {errors.phone && <p className="text-sm text-red-500 ml-2">{errors.phone}</p>}
-          </div>
-
-          {/* Service Topic */}
-          <div className="space-y-2">
-            <label htmlFor="serviceTopic" className="text-sm font-medium text-foreground ml-2">
-              Service Topic
-            </label>
-            <select
-              id="serviceTopic"
-              value={form.serviceTopic}
-              onChange={(event) => updateField("serviceTopic", event.target.value)}
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            >
-              <option value="">Select Topic</option>
-              {SERVICE_TOPICS.map((topic) => (
-                <option key={topic.topic} value={topic.topic}>
-                  {topic.topic}
-                </option>
-              ))}
-            </select>
-            {errors.serviceTopic && <p className="text-sm text-red-500 ml-2">{errors.serviceTopic}</p>}
-          </div>
-
-          {/* Service */}
-          <div className="space-y-2">
-            <label htmlFor="service" className="text-sm font-medium text-foreground ml-2">
-              Service
-            </label>
-            <select
-              id="service"
-              value={form.service}
-              disabled={!form.serviceTopic}
-              onChange={(event) => updateField("service", event.target.value)}
-              className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground disabled:opacity-50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-            >
-              <option value="">Select Service</option>
-              {availableServices.map((service) => (
-                <option key={service} value={service}>
-                  {service}
-                </option>
-              ))}
-            </select>
-            {errors.service && <p className="text-sm text-red-500 ml-2">{errors.service}</p>}
-          </div>
-        </div>
-
-        {/* Message */}
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Email */}
         <div className="space-y-2">
-          <div className="flex items-center justify-between ml-2">
-            <label htmlFor="message" className="text-sm font-medium text-foreground">
-              Message
-            </label>
-            <span className={`text-xs ${messageWordCount > MAX_MESSAGE_WORDS ? "text-red-500" : "text-foreground-muted"}`}>
-              {messageWordCount}/{MAX_MESSAGE_WORDS}
-            </span>
-          </div>
-          <textarea
-            id="message"
-            name="message"
-            rows={6}
-            value={form.message}
-            onChange={(event) => updateField("message", event.target.value)}
-            placeholder="Describe your project, goals, requirements and expected outcomes..."
-            aria-invalid={!!errors.message}
-            className="w-full resize-none rounded-[24px] border border-border bg-transparent px-4 py-4 text-foreground placeholder:text-foreground-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          <label htmlFor="email" className="text-sm font-medium text-foreground ml-2">
+            Email Address
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            value={form.email}
+            onChange={(event) => updateField("email", event.target.value)}
+            placeholder="swaleh@example.com"
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "email-error" : undefined}
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
           />
-          {errors.message && <p className="text-sm text-red-500 ml-2">{errors.message}</p>}
+          {errors.email && (
+            <p id="email-error" className="text-sm text-red-500 ml-2">
+              {errors.email}
+            </p>
+          )}
         </div>
 
-        {/* Submit */}
-        <div className="pt-4">
-          <button
-            type="submit"
-            disabled={!isFormValid || isSubmitting}
-            className="inline-flex h-12 items-center justify-center gap-3 rounded-full border border-primary px-8 text-sm font-medium text-primary transition-all hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {isSubmitting && (
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-            )}
-            {isSubmitting ? "Submitting..." : "Send Message"}
-          </button>
+        {/* Full Names */}
+        <div className="space-y-2">
+          <label htmlFor="fullNames" className="text-sm font-medium text-foreground ml-2">
+            Full Names
+          </label>
+          <input
+            id="fullNames"
+            name="fullNames"
+            type="text"
+            autoComplete="name"
+            value={form.fullNames}
+            onChange={(event) => updateField("fullNames", event.target.value)}
+            placeholder="Swaleh Mohamad"
+            aria-invalid={!!errors.fullNames}
+            aria-describedby={errors.fullNames ? "fullname-error" : undefined}
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+          />
+          {errors.fullNames && (
+            <p id="fullname-error" className="text-sm text-red-500 ml-2">
+              {errors.fullNames}
+            </p>
+          )}
         </div>
-      </form>
-    </>
+
+        {/* Company */}
+        <div className="space-y-4 md:col-span-2">
+          <div className="flex items-center gap-3 ml-2">
+            <input
+              id="self-employed"
+              type="checkbox"
+              checked={form.selfEmployed}
+              onChange={(event) => updateField("selfEmployed", event.target.checked)}
+              className="h-4 w-4 rounded-sm border-border text-primary focus:ring-primary"
+            />
+            <label htmlFor="self-employed" className="text-sm text-foreground">
+              Self Employed
+            </label>
+          </div>
+
+          {!form.selfEmployed && (
+            <div className="space-y-2">
+              <label htmlFor="company" className="text-sm font-medium text-foreground ml-2">
+                Company Name
+              </label>
+              <input
+                id="company"
+                name="company"
+                type="text"
+                value={form.company}
+                onChange={(event) => updateField("company", event.target.value)}
+                placeholder="ABC Technologies Ltd."
+                aria-invalid={!!errors.company}
+                className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+              />
+              {errors.company && <p className="text-sm text-red-500 ml-2">{errors.company}</p>}
+            </div>
+          )}
+        </div>
+
+        {/* Country */}
+        <div className="space-y-2">
+          <label htmlFor="country" className="text-sm font-medium text-foreground ml-2">
+            Country
+          </label>
+          <select
+            id="country"
+            value={form.country}
+            onChange={(event) => updateField("country", event.target.value)}
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground focus:border-primary focus:outline-none appearance-none"
+          >
+            <option value="">Select Country</option>
+            {COUNTRIES.map((country) => (
+              <option key={country.name} value={country.name}>
+                {country.flag} {country.name}
+              </option>
+            ))}
+          </select>
+          {errors.country && <p className="text-sm text-red-500 ml-2">{errors.country}</p>}
+        </div>
+
+        {/* County */}
+        <div className="space-y-2">
+          <label htmlFor="county" className="text-sm font-medium text-foreground ml-2">
+            County / Town
+          </label>
+          <select
+            id="county"
+            value={form.county}
+            disabled={!form.country}
+            onChange={(event) => updateField("county", event.target.value)}
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground disabled:opacity-50 focus:border-primary focus:outline-none appearance-none"
+          >
+            <option value="">Select County / Town</option>
+            {availableCounties.map((county) => (
+              <option key={county} value={county}>
+                {county}
+              </option>
+            ))}
+          </select>
+          {errors.county && <p className="text-sm text-red-500 ml-2">{errors.county}</p>}
+        </div>
+
+        {/* Country Code */}
+        <div className="space-y-2">
+          <label htmlFor="countryCode" className="text-sm font-medium text-foreground ml-2">
+            Country Code
+          </label>
+          <input
+            id="countryCode"
+            type="text"
+            value={selectedCountry ? `${selectedCountry.flag} ${selectedCountry.dialCode}` : ""}
+            readOnly
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground focus:outline-none opacity-70"
+          />
+        </div>
+
+        {/* Phone */}
+        <div className="space-y-2">
+          <label htmlFor="phone" className="text-sm font-medium text-foreground ml-2">
+            Phone Number
+          </label>
+          <input
+            id="phone"
+            name="phone"
+            type="text"
+            value={form.phone}
+            onChange={(event) => updateField("phone", event.target.value)}
+            placeholder="712345678"
+            aria-invalid={!!errors.phone}
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+          />
+          {errors.phone && <p className="text-sm text-red-500 ml-2">{errors.phone}</p>}
+        </div>
+
+        {/* Service Topic */}
+        <div className="space-y-2">
+          <label htmlFor="serviceTopic" className="text-sm font-medium text-foreground ml-2">
+            Service Topic
+          </label>
+          <select
+            id="serviceTopic"
+            value={form.serviceTopic}
+            onChange={(event) => updateField("serviceTopic", event.target.value)}
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground focus:border-primary focus:outline-none appearance-none"
+          >
+            <option value="">Select Topic</option>
+            {SERVICE_TOPICS.map((topic) => (
+              <option key={topic.topic} value={topic.topic}>
+                {topic.topic}
+              </option>
+            ))}
+          </select>
+          {errors.serviceTopic && <p className="text-sm text-red-500 ml-2">{errors.serviceTopic}</p>}
+        </div>
+
+        {/* Service */}
+        <div className="space-y-2">
+          <label htmlFor="service" className="text-sm font-medium text-foreground ml-2">
+            Service
+          </label>
+          <select
+            id="service"
+            value={form.service}
+            disabled={!form.serviceTopic}
+            onChange={(event) => updateField("service", event.target.value)}
+            className="w-full rounded-full border border-border bg-transparent px-4 py-3 text-foreground disabled:opacity-50 focus:border-primary focus:outline-none appearance-none"
+          >
+            <option value="">Select Service</option>
+            {availableServices.map((service) => (
+              <option key={service} value={service}>
+                {service}
+              </option>
+            ))}
+          </select>
+          {errors.service && <p className="text-sm text-red-500 ml-2">{errors.service}</p>}
+        </div>
+      </div>
+
+      {/* Message */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between ml-2">
+          <label htmlFor="message" className="text-sm font-medium text-foreground">
+            Message
+          </label>
+          <span className={`text-xs ${messageWordCount > MAX_MESSAGE_WORDS ? "text-red-500" : "text-muted-foreground"}`}>
+            {messageWordCount}/{MAX_MESSAGE_WORDS}
+          </span>
+        </div>
+        <textarea
+          id="message"
+          name="message"
+          rows={6}
+          value={form.message}
+          onChange={(event) => updateField("message", event.target.value)}
+          placeholder="Describe your project, goals, requirements and expected outcomes..."
+          aria-invalid={!!errors.message}
+          className="w-full resize-none rounded-[24px] border border-border bg-transparent px-4 py-4 text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
+        />
+        {errors.message && <p className="text-sm text-red-500 ml-2">{errors.message}</p>}
+      </div>
+
+      {/* Submit */}
+      <div className="pt-4">
+        <button
+          type="submit"
+          disabled={!isFormValid || isSubmitting}
+          className="inline-flex h-12 items-center justify-center gap-3 rounded-full bg-foreground px-8 font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting && (
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+          )}
+          {isSubmitting ? "Submitting..." : "Send Message"}
+        </button>
+      </div>
+    </form>
   );
 }
 
