@@ -1,17 +1,11 @@
 import "server-only";
 
 import { cookies } from "next/headers";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 
-import {
-  createServerClient,
-  type CookieOptions,
-} from "@supabase/ssr";
-
-const supabaseUrl =
-  process.env.NEXT_PUBLIC_SUPABASE_URL;
-
-const supabaseAnonKey =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Adding the '!' operator forces TypeScript to treat these as strictly string types
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
 if (!supabaseUrl) {
   throw new Error(
@@ -34,8 +28,7 @@ export async function createClient() {
     {
       cookies: {
         get(name: string) {
-          return cookieStore.get(name)
-            ?.value;
+          return cookieStore.get(name)?.value;
         },
 
         set(
@@ -86,7 +79,5 @@ export async function createClient() {
   );
 }
 
-export type SupabaseClient =
-  Awaited<
-    ReturnType<typeof createClient>
-  >;
+export type SupabaseClient = Awaited<ReturnType<typeof createClient>>;
+
