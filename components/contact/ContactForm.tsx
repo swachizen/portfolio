@@ -246,9 +246,6 @@ export default function ContactForm() {
       toast.success("Message sent successfully. I will get back to you soon.");
       setForm(INITIAL_FORM);
       setErrors({});
-      setTurnstileToken("");
-
-      turnstileRef.current?.reset();
 
     } catch (error) {
       const message = error instanceof Error ? error.message : "Something went wrong.";
