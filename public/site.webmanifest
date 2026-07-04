@@ -1,0 +1,158 @@
+{
+  "id": "/",
+  "name": "Developer Swaleh Portfolio",
+  "short_name": "Swaleh",
+  "description": "Professional Full-Stack Developer from Mombasa, Kenya specializing in Next.js, TypeScript, Tailwind CSS, Supabase and AI-powered web applications.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "portrait-primary",
+  "background_color": "#000000",
+  "theme_color": "#4285f4",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": [
+    "portfolio",
+    "technology",
+    "developer",
+    "business"
+  ],
+  "prefer_related_applications": false,
+
+  "icons": [
+    {
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+
+  "screenshots": [
+    {
+      "src": "/screenshots/home-light.webp",
+      "sizes": "1440x900",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Homepage"
+    },
+    {
+      "src": "/screenshots/projects.webp",
+      "sizes": "1440x900",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "Projects Showcase"
+    },
+    {
+      "src": "/screenshots/ai.webp",
+      "sizes": "1440x900",
+      "type": "image/webp",
+      "form_factor": "wide",
+      "label": "AI Assistant"
+    },
+    {
+      "src": "/screenshots/mobile-home.webp",
+      "sizes": "390x844",
+      "type": "image/webp",
+      "form_factor": "narrow",
+      "label": "Mobile Homepage"
+    }
+  ],
+
+  "shortcuts": [
+    {
+      "name": "About Me",
+      "short_name": "About Me",
+      "description": "Learn more about Swaleh Mohamad Swalehe",
+      "url": "/about",
+      "icons": [
+        {
+          "src": "/shortcuts/about.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "short_name": "My Projects",
+      "description": "Explore portfolio projects",
+      "url": "/projects",
+      "icons": [
+        {
+          "src": "/shortcuts/projects.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "AI Assistant",
+      "short_name": "AI Assistant",
+      "description": "Learn more about Swaleh through his AI Assistant",
+      "url": "/ai",
+      "icons": [
+        {
+          "src": "/shortcuts/ai.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+
+  "launch_handler": {
+    "client_mode": "focus-existing"
+  },
+
+  "edge_side_panel": {
+    "preferred_width": 420
+  }
+}
