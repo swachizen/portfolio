@@ -26,7 +26,11 @@ async function getFeaturedProjects() {
         problem_solved,
         tech_stacks,
         screenshots,
-        live_url
+        live_url,
+        github_url,
+        est,
+        core_role,
+        updated_at
       `,
     )
     .eq("featured", true)
