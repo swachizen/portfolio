@@ -22,7 +22,11 @@ async function getFeaturedProjects() {
         cover_photo,
         industry,
         featured,
-        created_at
+        created_at,
+        problem_solved,
+        tech_stacks,
+        screenshots,
+        live_url
       `,
     )
     .eq("featured", true)
