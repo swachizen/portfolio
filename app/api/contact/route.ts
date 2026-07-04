@@ -34,8 +34,6 @@ type ContactPayload = {
   message: string;
 
   website: string;
-
-  turnstileToken: string;
 };
 
 function getClientIp(
@@ -60,50 +58,6 @@ function getClientIp(
   return realIp ?? "unknown";
 }
 
-async function verifyTurnstile(
-  token: string,
-  ip: string,
-): Promise<boolean> {
-  const secretKey =
-    process.env
-      .TURNSTILE_SECRET_KEY;
-
-  if (!secretKey) {
-    throw new Error(
-      "Turnstile secret key is missing.",
-    );
-  }
-
-  const response =
-    await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          secret: secretKey,
-          response: token,
-          remoteip: ip,
-        }),
-        cache: "no-store",
-      },
-    );
-
-  if (!response.ok) {
-    return false;
-  }
-
-  const result =
-    (await response.json()) as {
-      success?: boolean;
-    };
-
-  return result.success === true;
-}
-
 function validatePayload(
   payload: ContactPayload,
 ): string | null {
@@ -126,12 +80,6 @@ function validatePayload(
     !payload.company
   ) {
     return "Company name is required.";
-  }
-
-  if (
-    !payload.turnstileToken
-  ) {
-    return "Security verification failed.";
   }
 
   return null;
@@ -232,28 +180,6 @@ export async function POST(
         },
         {
           status: 429,
-        },
-      );
-    }
-
-    /*
-     * Layer 3:
-     * Cloudflare Turnstile
-     */
-    const turnstilePassed =
-      await verifyTurnstile(
-        payload.turnstileToken,
-        ip,
-      );
-
-    if (!turnstilePassed) {
-      return NextResponse.json(
-        {
-          message:
-            "Security verification failed.",
-        },
-        {
-          status: 403,
         },
       );
     }

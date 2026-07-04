@@ -2,28 +2,9 @@
 
 import { useEffect, useMemo, useState, useRef } from "react";
 import toast from "react-hot-toast";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 
 import { COUNTRIES } from "@/lib/country";
 import { SERVICE_TOPICS } from "@/lib/service";
-
-declare global {
-  interface Window {
-    turnstile?: {
-      render: (
-        container: string | HTMLElement,
-        options: {
-          sitekey: string;
-          callback: (token: string) => void;
-          "expired-callback": () => void;
-          theme: "light" | "dark" | "auto";
-          appearance: "always" | "interaction-only" | "execute";
-        },
-      ) => void;
-      reset: (selector?: string) => void;
-    };
-  }
-}
 
 type FormData = {
   email: string;
@@ -67,8 +48,6 @@ export default function ContactForm() {
   const [form, setForm] = useState<FormData>(INITIAL_FORM);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const turnstileRef =  useRef<TurnstileInstance>(null);
 
   const selectedCountry = useMemo(
     () => COUNTRIES.find((country) => country.name === form.country),
@@ -234,11 +213,6 @@ export default function ContactForm() {
       return;
     }
 
-    if (!turnstileToken) {
-      toast.error("Please complete security verification.");
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -259,7 +233,6 @@ export default function ContactForm() {
           serviceTopic: form.serviceTopic,
           service: form.service,
           message: form.message.trim(),
-          turnstileToken,
           website: form.website,
         }),
       });
@@ -526,31 +499,6 @@ export default function ContactForm() {
           />
           {errors.message && <p className="text-sm text-red-500 ml-2">{errors.message}</p>}
         </div>
-
-        {/* Turnstile Container */}
-        <Turnstile
-  ref={turnstileRef}
-  siteKey={
-    process.env
-      .NEXT_PUBLIC_TURNSTILE_SITE_KEY!
-  }
-  options={{
-    theme: "auto",
-    appearance: "always",
-  }}
-  onSuccess={(token) => {
-    setTurnstileToken(token);
-  }}
-  onExpire={() => {
-    setTurnstileToken("");
-  }}
-  onError={() => {
-    setTurnstileToken("");
-    toast.error(
-      "Security verification failed.",
-    );
-  }}
-/>
 
         {/* Submit */}
         <div className="pt-4">
