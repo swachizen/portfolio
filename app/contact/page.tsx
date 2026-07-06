@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact/ContactForm";
 
-const siteUrl = "https://swaleh.app";
+const siteUrl = "https://www.swaleh.app";
 const pageUrl = `${siteUrl}/contact`;
 
 export const metadata: Metadata = {

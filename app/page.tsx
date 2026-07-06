@@ -6,7 +6,7 @@ import FeaturedWork from "@/components/home/FeaturedWork";
 import FeaturedWorkSkeleton from "@/components/home/FeaturedWorkSkeleton";
 import Services from "@/components/home/Services";
 
-    const siteUrl = "https://swaleh.app";
+    const siteUrl = "https://www.swaleh.app";
 
     const pageUrl = `${siteUrl}/`;
 

@@ -9,7 +9,7 @@ import Experience from "@/components/about/Experience";
 import PersonalTouch from "@/components/about/PersonalTouch";
 import AboutCTA from "@/components/about/AboutCTA";
 
-const siteUrl = "https://swaleh.app";
+const siteUrl = "https://www.swaleh.app";
 const pageUrl = `${siteUrl}/about`;
 
 export const metadata: Metadata = {

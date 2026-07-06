@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 import ChatInterface from "@/components/ai/ChatInterface";
 
-const siteUrl = "https://swaleh.app";
+const siteUrl = "https://www.swaleh.app";
 const pageUrl = `${siteUrl}/ai`;
 
 export const metadata: Metadata = {

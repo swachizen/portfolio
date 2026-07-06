@@ -23,7 +23,7 @@ import CopyButton from "@/components/projects/CopyButton";
 import ScreenshotGallery from "@/components/projects/ScreenshotGallery";
 import { getTechIcon } from "@/lib/getIcons";
 
-const siteUrl = "https://swaleh.app";
+const siteUrl = "https://www.swaleh.app";
 
 type Project = {
   id: string;

@@ -6,7 +6,7 @@ import Accessibility from "@/components/secondary/Accessibility";
 import Terms from "@/components/secondary/Terms";
 import Policy from "@/components/secondary/Policy";
 
-const siteUrl = "https://swaleh.app";
+const siteUrl = "https://www.swaleh.app";
 const pageUrl = `${siteUrl}/secondary`;
 
 export const metadata: Metadata = {

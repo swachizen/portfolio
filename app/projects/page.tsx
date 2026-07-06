@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import Search from "@/components/projects/Search";
 
-const siteUrl = "https://swaleh.app";
+const siteUrl = "https://www.swaleh.app";
 const pageUrl = `${siteUrl}/projects`;
 
 export const metadata: Metadata = {

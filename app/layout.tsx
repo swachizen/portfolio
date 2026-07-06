@@ -20,7 +20,7 @@ const jakarta = Plus_Jakarta_Sans({
   preload: true,
 });
 
-const siteUrl = "https://swaleh.app";
+const siteUrl = "https://www.swaleh.app";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -205,7 +205,7 @@ export default function RootLayout({
     sameAs: [
       "https://github.com/swachizen",
       "https://www.linkedin.com/in/swaleh-mohamad-a5b2353a4",
-      "https://x.com/swachizen",
+      "https://x.com/swaleh_001",
     ],
   };
 
