@@ -207,7 +207,16 @@ export default function RootLayout({
       "https://www.linkedin.com/in/swaleh-mohamad-a5b2353a4",
       "https://x.com/swaleh_001",
     ],
-  };
+  },
+  {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Swaleh Portfolio",
+      url: siteUrl,
+      // Providing an alternate name can help if Google thinks "Swaleh Portfolio" is too generic
+      alternateName: ["Swaleh Mohamad Portfolio", "Swaleh's Portfolio"], 
+    }
+  ];
 
   return (
     <html
