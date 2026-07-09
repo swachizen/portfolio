@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { ChevronDown, Laptop, Moon, Palette, Sun } from "lucide-react";
 
-const SITE_URL = "https://swaleh.app";
+const SITE_URL = "https://www.swaleh.app";
 
 const CONTACTS = {
   email: "mailto:swalehmohamed203@gmail.com",
@@ -18,7 +18,7 @@ const CONTACTS = {
 const VERSION = {
   major: 1,
   minor: 0,
-  patch: 1,
+  patch: 3,
 };
 
 const deepDiveLinks = [
