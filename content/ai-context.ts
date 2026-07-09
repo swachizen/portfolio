@@ -53,8 +53,6 @@ cloud deployment and modern developer workflows.
 
 My saying or motto:
 Building Sytems. Building Structures.
-
-My friend is Moses Wesonga.
 # SWALEH'S JOURNEY
 
 2025: Started learning web development:
