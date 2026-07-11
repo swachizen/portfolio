@@ -18,7 +18,7 @@ const CONTACTS = {
 const VERSION = {
   major: 1,
   minor: 0,
-  patch: 3,
+  patch: 4,
 };
 
 const deepDiveLinks = [

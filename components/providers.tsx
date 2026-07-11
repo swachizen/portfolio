@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "react-hot-toast";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -11,6 +12,24 @@ type ProvidersProps = {
 export default function Providers({
   children,
 }: Readonly<ProvidersProps>) {
+ useEffect(() => {
+    // Register the Service Worker only in the browser and in production
+    if (
+      typeof window !== "undefined" &&
+      "serviceWorker" in navigator &&
+      process.env.NODE_ENV === "production"
+    ) {
+      navigator.serviceWorker
+        .register("/sw.js")
+        .then((registration) => {
+          console.log("[PWA] Service Worker registered with scope:", registration.scope);
+        })
+        .catch((error) => {
+          console.error("[PWA] Service Worker registration failed:", error);
+        });
+    }
+  }, []);
+
   return (
     <ThemeProvider
       attribute="class"

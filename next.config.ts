@@ -1,4 +1,15 @@
 import type { NextConfig } from "next";
+import withSerwistInit from "@serwist/next";
+
+// Initialize Serwist with the paths for your Service Worker
+const withSerwist = withSerwistInit({
+  swSrc: "app/sw.ts",
+  swDest: "public/sw.js",
+  // Disable in development so it doesn't aggressively cache while you build
+  disable: process.env.NODE_ENV === "development",
+  register: true,
+  reloadOnOnline: true,
+});
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -104,4 +115,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Wrap your perfectly optimized config with Serwist
+export default withSerwist(nextConfig);
+

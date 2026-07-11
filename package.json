@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@google/genai": "^2.9.0",
+    "@serwist/core": "^9.5.11",
+    "@serwist/next": "^9.5.11",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.2",
     "@vercel/speed-insights": "^2.0.0",
