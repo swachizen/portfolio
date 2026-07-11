@@ -2,33 +2,32 @@ import { defaultCache } from "@serwist/next/worker";
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
 import { Serwist } from "serwist";
 
-// This declares the global worker scope to TypeScript, ensuring strict type safety
-// `__SW_MANIFEST` is the injection point where Next.js dynamically injects your hashed build files.
+// We extend the global WorkerGlobalScope to include the injected __SW_MANIFEST
+// This is the only "hack" needed now that webworker types are enabled globally.
 declare global {
   interface WorkerGlobalScope extends SerwistGlobalConfig {
     __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
   }
 }
 
-declare const self: ServiceWorkerGlobalScope;
+// 'self' is now automatically recognized as ServiceWorkerGlobalScope
+// thanks to the 'webworker' lib in your tsconfig.json
 
 const serwist = new Serwist({
-  // Automatically caches all generated Next.js assets (HTML, CSS, JS, images)
+  // Automatically caches all generated Next.js assets
   precacheEntries: self.__SW_MANIFEST,
-  
-  // CRITICAL FIX: Forces the new service worker to instantly kick out the old one
+
+  // Force the new service worker to instantly take control
   skipWaiting: true,
-  
-  // CRITICAL FIX: Forces the new service worker to immediately control all open tabs
   clientsClaim: true,
-  
-  // Improves perceived load times by fetching navigation requests in parallel with worker boot
+
+  // Improves performance by fetching navigation requests in parallel
   navigationPreload: true,
-  
-  // Uses Serwist's official Next.js caching strategy to ensure 100% Lighthouse scores
+
+  // Uses Serwist's official Next.js caching strategy
   runtimeCaching: defaultCache,
 });
 
-// Bootstraps the service worker and registers all necessary fetch/activate/install listeners
+// Bootstraps the service worker
 serwist.addEventListeners();
 
